@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState } from "react";
 import {
   Accordion,
   AccordionItem,
@@ -180,7 +180,7 @@ const DrawerMenu = (props: DrawerMenuProps) => {
 const LayoutWithMenu = ({ children }: any) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const isSmall = useBreakpointValue({ base: true, md: false });
-  const [isDisplay, setIsDisplay] = React.useState(true);
+  const [isDisplay, setIsDisplay] = useState(true);
 
   const handleOnClick = () => {
     if (isSmall) {

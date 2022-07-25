@@ -6,7 +6,6 @@ import {
   AccordionButton,
   AccordionPanel,
   Box,
-  Badge,
   Button,
   DrawerBody,
   DrawerContent,
@@ -14,11 +13,7 @@ import {
   DrawerOverlay,
   HStack,
   Heading,
-  Highlight,
-  Image,
-  Kbd,
   ListItem,
-  OrderedList,
   Popover,
   PopoverTrigger,
   PopoverContent,
@@ -27,13 +22,6 @@ import {
   PopoverCloseButton,
   Stack,
   Spacer,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  TableContainer,
   useBreakpointValue,
   useDisclosure,
   UnorderedList,
@@ -42,120 +30,68 @@ import HomeIcon from "@mui/icons-material/Home";
 import MenuIcon from "@mui/icons-material/Menu";
 import TimerIcon from "@mui/icons-material/Timer";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import data from "./data";
+import Content from "./Content";
 
 interface DrawerMenuProps {
   isOpen: boolean;
   onClose: any;
 }
 
+interface AccordionItemProps {
+  title: string;
+  children: any;
+}
+
+interface ListProps {
+  data: string[];
+}
+
+const ItemAccordion = (props: AccordionItemProps) => {
+  return (
+    <AccordionItem>
+      <h2>
+        <AccordionButton>
+          <Box flex="1" textAlign="left">
+            <Heading size="md" fontWeight="semibold">
+              {props.title}
+            </Heading>
+          </Box>
+          <AccordionIcon />
+        </AccordionButton>
+      </h2>
+      <AccordionPanel pb={4}>{props.children}</AccordionPanel>
+    </AccordionItem>
+  );
+};
+
+const List = (props: ListProps) => {
+  return (
+    <UnorderedList>
+      {props.data.map((val) => {
+        return <ListItem>{val}</ListItem>;
+      })}
+    </UnorderedList>
+  );
+};
+
 const Navigation = () => {
+  const listItems = data.listItems;
+
   return (
     <Stack as="nav">
-      <Accordion defaultIndex={[0, 1, 2, 3, 4]} allowMultiple>
-        <AccordionItem>
-          <h2>
-            <AccordionButton>
-              <Box flex="1" textAlign="left">
-                <Heading size="md" fontWeight="semibold">
-                  Queue
-                </Heading>
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-          </h2>
-          <AccordionPanel pb={4}>
-            <UnorderedList>
-              <ListItem>Lorem ipsum dolor sit amet</ListItem>
-              <ListItem>Consectetur adipiscing elit</ListItem>
-              <ListItem>Integer molestie lorem at massa</ListItem>
-              <ListItem>Facilisis in pretium nisl aliquet</ListItem>
-            </UnorderedList>
-          </AccordionPanel>
-        </AccordionItem>
-
-        <AccordionItem>
-          <h2>
-            <AccordionButton>
-              <Box flex="1" textAlign="left">
-                <Heading size="md" fontWeight="semibold">
-                  Project
-                </Heading>
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-          </h2>
-          <AccordionPanel pb={4}>
-            <UnorderedList>
-              <ListItem>Lorem ipsum dolor sit amet</ListItem>
-              <ListItem>Consectetur adipiscing elit</ListItem>
-              <ListItem>Integer molestie lorem at massa</ListItem>
-              <ListItem>Facilisis in pretium nisl aliquet</ListItem>
-            </UnorderedList>
-          </AccordionPanel>
-        </AccordionItem>
-
-        <AccordionItem>
-          <h2>
-            <AccordionButton>
-              <Box flex="1" textAlign="left">
-                <Heading size="md" fontWeight="semibold">
-                  Project
-                </Heading>
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-          </h2>
-          <AccordionPanel pb={4}>
-            <UnorderedList>
-              <ListItem>Lorem ipsum dolor sit amet</ListItem>
-              <ListItem>Consectetur adipiscing elit</ListItem>
-              <ListItem>Integer molestie lorem at massa</ListItem>
-              <ListItem>Facilisis in pretium nisl aliquet</ListItem>
-            </UnorderedList>
-          </AccordionPanel>
-        </AccordionItem>
-
-        <AccordionItem>
-          <h2>
-            <AccordionButton>
-              <Box flex="1" textAlign="left">
-                <Heading size="md" fontWeight="semibold">
-                  Project
-                </Heading>
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-          </h2>
-          <AccordionPanel pb={4}>
-            <UnorderedList>
-              <ListItem>Lorem ipsum dolor sit amet</ListItem>
-              <ListItem>Consectetur adipiscing elit</ListItem>
-              <ListItem>Integer molestie lorem at massa</ListItem>
-              <ListItem>Facilisis in pretium nisl aliquet</ListItem>
-            </UnorderedList>
-          </AccordionPanel>
-        </AccordionItem>
-
-        <AccordionItem>
-          <h2>
-            <AccordionButton>
-              <Box flex="1" textAlign="left">
-                <Heading size="md" fontWeight="semibold">
-                  Project
-                </Heading>
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-          </h2>
-          <AccordionPanel pb={4}>
-            <UnorderedList>
-              <ListItem>Lorem ipsum dolor sit amet</ListItem>
-              <ListItem>Consectetur adipiscing elit</ListItem>
-              <ListItem>Integer molestie lorem at massa</ListItem>
-              <ListItem>Facilisis in pretium nisl aliquet</ListItem>
-            </UnorderedList>
-          </AccordionPanel>
-        </AccordionItem>
+      <List data={listItems.content} />
+      <Accordion defaultIndex={[0, 1]} allowMultiple>
+        <ItemAccordion title="Queue">
+          <UnorderedList>
+            <List data={listItems.queue} />
+          </UnorderedList>
+        </ItemAccordion>
+        <ItemAccordion title="Project">
+          <UnorderedList>
+            <List data={listItems.project} />
+          </UnorderedList>
+        </ItemAccordion>
       </Accordion>
     </Stack>
   );
@@ -215,12 +151,7 @@ const LayoutWithMenu = ({ children }: any) => {
             <PopoverArrow />
             <PopoverCloseButton />
             <PopoverBody>
-              <UnorderedList>
-                <ListItem>User</ListItem>
-                <ListItem>Setting</ListItem>
-                <ListItem>Theme</ListItem>
-                <ListItem>Logout</ListItem>
-              </UnorderedList>
+              <List data={data.home} />
             </PopoverBody>
           </PopoverContent>
         </Popover>
@@ -264,111 +195,7 @@ const LayoutWithMenu = ({ children }: any) => {
 const App = () => {
   return (
     <LayoutWithMenu>
-      <Box>
-        <Heading size="lg" marginX={4} marginY={8}>
-          Hello, World!
-        </Heading>
-
-        <Box margin={4}>
-          <OrderedList>
-            <ListItem>Lorem ipsum dolor sit amet</ListItem>
-            <ListItem>Consectetur adipiscing elit</ListItem>
-            <ListItem>Integer molestie lorem at massa</ListItem>
-            <ListItem>Facilisis in pretium nisl aliquet</ListItem>
-          </OrderedList>
-        </Box>
-
-        <Box margin={4}>
-          <Heading lineHeight="tall" size="sm">
-            <Highlight
-              query="spotlight"
-              styles={{ px: "2", py: "1", rounded: "full", bg: "red.100" }}
-            >
-              With the Highlight component, you can spotlight words.
-            </Highlight>
-          </Heading>
-        </Box>
-
-        <Box margin={4}>
-          <Stack direction="row">
-            <Badge>Default</Badge>
-            <Badge colorScheme="green">Success</Badge>
-            <Badge colorScheme="red">Removed</Badge>
-            <Badge colorScheme="purple">New</Badge>
-          </Stack>
-        </Box>
-
-        <TableContainer>
-          <Table variant="simple">
-            <Thead>
-              <Tr>
-                <Th>To convert</Th>
-                <Th>into</Th>
-                <Th isNumeric>multiply by</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              <Tr>
-                <Td>inches</Td>
-                <Td>millimetres (mm)</Td>
-                <Td isNumeric>25.4</Td>
-              </Tr>
-              <Tr>
-                <Td>feet</Td>
-                <Td>centimetres (cm)</Td>
-                <Td isNumeric>30.48</Td>
-              </Tr>
-              <Tr>
-                <Td>yards</Td>
-                <Td>metres (m)</Td>
-                <Td isNumeric>0.91444</Td>
-              </Tr>
-            </Tbody>
-          </Table>
-        </TableContainer>
-
-        <Box margin={4}>
-          <Image
-            borderRadius="full"
-            boxSize="150px"
-            src="https://bit.ly/dan-abramov"
-            alt="Dan Abramov"
-          />
-        </Box>
-
-        <Box margin={4}>
-          Please <Kbd>shift</Kbd> + <Kbd>S</Kbd>
-        </Box>
-
-        <TableContainer>
-          <Table variant="simple">
-            <Thead>
-              <Tr>
-                <Th>To convert</Th>
-                <Th>into</Th>
-                <Th isNumeric>multiply by</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              <Tr>
-                <Td>inches</Td>
-                <Td>millimetres (mm)</Td>
-                <Td isNumeric>25.4</Td>
-              </Tr>
-              <Tr>
-                <Td>feet</Td>
-                <Td>centimetres (cm)</Td>
-                <Td isNumeric>30.48</Td>
-              </Tr>
-              <Tr>
-                <Td>yards</Td>
-                <Td>metres (m)</Td>
-                <Td isNumeric>0.91444</Td>
-              </Tr>
-            </Tbody>
-          </Table>
-        </TableContainer>
-      </Box>
+      <Content />
     </LayoutWithMenu>
   );
 };

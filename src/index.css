@@ -5,7 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  height: 100vh;
+  height: calc(var(--vh) * 100);
   width: 100vw;
   overflow: hidden;
 }
@@ -41,6 +41,6 @@ body {
 .unDisplay-content,
 .display-sidebar,
 .unDisplay-sidebar {
-  height: calc(100vh - 43px);
+  height: calc(var(--vh) * 100 - 43px);
   overflow-y: scroll;
 }

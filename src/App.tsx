@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Accordion,
   AccordionItem,
@@ -32,6 +32,7 @@ import TimerIcon from "@mui/icons-material/Timer";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import data from "./data";
 import Content from "./Content";
+import useWindowSize from "./useWindowSize";
 
 interface DrawerMenuProps {
   isOpen: boolean;
@@ -193,6 +194,11 @@ const LayoutWithMenu = ({ children }: any) => {
 };
 
 const App = () => {
+  const [, height] = useWindowSize();
+  useEffect(() => {
+    document.documentElement.style.setProperty("--vh", height / 100 + "px");
+  }, [height]);
+
   return (
     <LayoutWithMenu>
       <Content />
